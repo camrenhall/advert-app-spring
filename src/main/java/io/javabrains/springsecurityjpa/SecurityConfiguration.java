@@ -26,9 +26,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/business").hasRole("BUSINESS")
                 .antMatchers("/").permitAll()
                 .and().formLogin();
+
+        http.csrf().disable();
     }
+
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
