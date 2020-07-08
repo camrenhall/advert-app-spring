@@ -14,9 +14,9 @@ CREATE TABLE campaigns (
 );
 
 INSERT INTO campaigns VALUES
-(1, 1, 'T-Mobile', 'tech'),
-(2, 1, 'Texas Roadhouse', 'food'),
-(3, 1, 'Arbys', 'food');
+(1, 1, 'T-Mobile', 'tech', 0, 0),
+(2, 1, 'Texas Roadhouse', 'food', 0, 0),
+(3, 1, 'Arbys', 'food', 0, 0);
 
 DROP TABLE If EXISTS user;
 CREATE TABLE user (
@@ -32,6 +32,6 @@ CREATE TABLE user (
 );
 
 INSERT INTO user VALUES
-(1, 1, 'pass', 'ROLE_USER', 'user'),
-(2, 1, 'admin', 'ROLE_ADMIN', 'admin'),
-(3, 1, 'pass', 'ROLE_BUSINESS', 'business');
+(1, 1, 'pass', 'ROLE_USER', 'user', 0, 0, 0),
+(2, 1, 'admin', 'ROLE_ADMIN', 'admin', 0, 0, 0),
+(3, 1, 'pass', 'ROLE_BUSINESS', 'business', 0, 0, 0);
