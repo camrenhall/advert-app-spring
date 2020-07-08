@@ -8,8 +8,6 @@ CREATE TABLE campaigns (
 	  active    	    BOOLEAN    			NOT NULL,
 	  name              VARCHAR(255)        NOT NULL,
 	  type_label        VARCHAR(255)        NOT NULL,
-	  number_assigned   int                 DEFAULT 0,
-	  number_completed  int                 DEFAULT 0
 
 );
 
