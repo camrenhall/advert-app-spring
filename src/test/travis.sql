@@ -12,9 +12,9 @@ CREATE TABLE campaigns (
 );
 
 INSERT INTO campaigns VALUES
-(1, 1, 'T-Mobile', 'tech', 0, 0),
-(2, 1, 'Texas Roadhouse', 'food', 0, 0),
-(3, 1, 'Arbys', 'food', 0, 0);
+(1, 1, 'T-Mobile', 'tech'),
+(2, 1, 'Texas Roadhouse', 'food'),
+(3, 1, 'Arbys', 'food');
 
 DROP TABLE If EXISTS user;
 CREATE TABLE user (
