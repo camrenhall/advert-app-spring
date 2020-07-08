@@ -7,7 +7,7 @@ CREATE TABLE campaigns (
 	  id          	    int 	    		auto_increment			PRIMARY KEY,
 	  active    	    BOOLEAN    			NOT NULL,
 	  name              VARCHAR(255)        NOT NULL,
-	  type_label        VARCHAR(255)        NOT NULL,
+	  type_label        VARCHAR(255)        NOT NULL
 
 );
 
