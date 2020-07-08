@@ -14,9 +14,9 @@ CREATE TABLE campaigns (
 );
 
 INSERT INTO campaigns (id, active, name, type_label, number_assigned, number_completed) VALUES
-(1, 1, 'T-Mobile', 'tech'),
-(2, 1, 'Texas Roadhouse', 'food'),
-(3, 1, 'Arbys', 'food');
+(1, 1, 'T-Mobile', 'tech', 0, 0),
+(2, 1, 'Texas Roadhouse', 'food', 0, 0),
+(3, 1, 'Arbys', 'food', 0, 0);
 
 DROP TABLE If EXISTS user;
 CREATE TABLE user (
