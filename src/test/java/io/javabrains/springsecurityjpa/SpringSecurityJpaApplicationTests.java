@@ -34,7 +34,6 @@ public class SpringSecurityJpaApplicationTests {
 	}
 
 	@Test
-	@WithMockUser(username = "admin", roles = {"ROLE_ADMIN"})
 	public void testXSS() throws Exception {
 		String result = mockMvc.
 				perform(get("/admin/display_user?userID=<script>alert('XSS!')</script>").accept(MediaType.TEXT_HTML_VALUE))
@@ -44,7 +43,6 @@ public class SpringSecurityJpaApplicationTests {
 	}
 
 	@Test
-	@WithMockUser(username = "admin", roles = {"ROLE_ADMIN"})
 	public void testSQLInjection() throws Exception {
 		String result = mockMvc.
 				perform(get("/admin/new_campaign?name=mytestcamp&type=food%27%29%3B+INSERT+INTO+campaigns+" +
