@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.SQLException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -45,7 +47,7 @@ public class SpringSecurityJpaApplicationTests {
 	@Test
 	public void testSQLInjection() throws Exception {
 		String result = mockMvc.
-				perform(get("/admin/new_campaign?name=mytestcamp&type=food%27%29%3B+INSERT+INTO+campaigns+" +
+				perform(get("/admin/new_campaiagn?name=mytestcamp&type=food%27%29%3B+INSERT+INTO+campaigns+" +
 						"%28%60name%60%2C+%60type_label%60%29+VALUES+%28%27thisisaninjection%27%2C+%27food")
 						.accept(MediaType.TEXT_HTML_VALUE))
 				.andExpect(status().isOk())
