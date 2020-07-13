@@ -25,7 +25,7 @@ public class SpringSecurityJpaApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@Test
 	public void testXSS() throws Exception {
 		//This should fail due to an XSS injection being possible

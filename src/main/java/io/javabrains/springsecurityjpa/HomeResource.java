@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.*;
 
 @RestController
@@ -148,7 +151,13 @@ public class HomeResource {
     // Vulnerable to an XSS injection:
     // http://localhost:8080/admin/display_user?userID=%3Cscript%3Ealert(%27XSS%20Success!%27)%3C/script%3E
     @GetMapping("/admin/display_user")
-    public String display_user(@RequestParam("userID") String userID) {
+    public String display_user(@RequestParam("userID") String userID) throws IOException {
+        try {
+            Double.parseDouble(userID);
+        } catch(NumberFormatException e){
+            HttpServletResponse request = null;
+            request.sendError(500);
+        }
         return ("<h1>Showing info about user with ID: " + userID + "</h1>");
     }
 
