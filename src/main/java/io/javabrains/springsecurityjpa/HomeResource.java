@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
 
@@ -22,13 +19,7 @@ public class HomeResource {
     @GetMapping("/")
     public String home() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
+        String username = ((UserDetails)principal).getUsername();
         return ("<h1>Welcome, " + username + "</h1>");
     }
 
@@ -101,12 +92,7 @@ public class HomeResource {
     public String user() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
 
         return ("<h1>Your username is: " + username + "</h1>");
     }
@@ -115,12 +101,7 @@ public class HomeResource {
     public String user_current_projects() throws SQLException{
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
 
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
@@ -148,14 +129,12 @@ public class HomeResource {
         return ("<h1>Welcome Admin</h1>");
     }
 
-    // Vulnerable to an XSS injection:
-    // http://localhost:8080/admin/display_user?userID=%3Cscript%3Ealert(%27XSS%20Success!%27)%3C/script%3E
     @GetMapping("/admin/display_user")
     public String display_user(@RequestParam("userID") String userID) throws IOException {
         try {
             Double.parseDouble(userID);
         } catch(NumberFormatException e){
-            return ("<h1>Invalid format for user ID.</h1>");
+            return ("<h1>Illegal arguments</h1>");
         }
         return ("<h1>Showing info about user with ID: " + userID + "</h1>");
     }
@@ -176,6 +155,12 @@ public class HomeResource {
     //Assigns a campaign to a user - this is not for creating a whole new ad campaign
     @PostMapping("/admin/add_campaign")
     public String add_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
+        try {
+            Double.parseDouble(userID);
+            Double.parseDouble(projectID);
+        } catch(NumberFormatException e){
+            return ("<h1>Illegal arguments</h1>");
+        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -215,6 +200,12 @@ public class HomeResource {
 
     @PostMapping("/admin/remove_campaign")
     public String remove_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
+        try {
+            Double.parseDouble(userID);
+            Double.parseDouble(projectID);
+        } catch(NumberFormatException e){
+            return ("<h1>Illegal arguments</h1>");
+        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -269,6 +260,12 @@ public class HomeResource {
 
     @PostMapping("/admin/complete_campaign")
     public String complete_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
+        try {
+            Double.parseDouble(userID);
+            Double.parseDouble(projectID);
+        } catch(NumberFormatException e){
+            return ("<h1>Illegal arguments</h1>");
+        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -332,14 +329,11 @@ public class HomeResource {
         return ("<h1>Welcome Business</h1>");
     }
 
-    //This is for adding in a campaign as an admin
-    //This is vulnerable to a SQL injection below
-    //http://localhost:8080/admin/new_campaign?name=mytestcamp&type=food%27%29%3B+INSERT+INTO+campaigns+%28%60name%60%2C+%60type_label%60%29+VALUES+%28%27thisisaninjection%27%2C+%27food
     //TODO change this to POST Method
     @GetMapping("/admin/new_campaign")
     public String new_campaign(@RequestParam("name") String name, @RequestParam("type") String type) throws SQLException {
         if (!name.matches("[a-zA-Z]+") || !type.matches("[a-zA-Z]+")){
-            return ("<h1>Illegal arguments to Name and Type</h1>");
+            return ("<h1>Illegal arguments</h1>");
         }
         String campaignToAdd = "";
         try{
@@ -357,14 +351,12 @@ public class HomeResource {
 
     @PostMapping("/business/new_campaign")
     public String new_campaign(@RequestParam("type") String type) throws SQLException {
+        if (!type.matches("[a-zA-Z]+")){
+            return ("<h1>Illegal arguments</h1>");
+        }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
 
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
@@ -376,13 +368,10 @@ public class HomeResource {
 
     @GetMapping("/business/view_completed")
     public String view_completed() throws SQLException {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
+
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -397,13 +386,10 @@ public class HomeResource {
 
     @GetMapping("/business/view_in_progress")
     public String view_in_progress() throws SQLException{
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
+
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
