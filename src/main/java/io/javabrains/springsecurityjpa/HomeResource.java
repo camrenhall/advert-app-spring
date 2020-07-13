@@ -153,7 +153,7 @@ public class HomeResource {
     }
 
     //Assigns a campaign to a user - this is not for creating a whole new ad campaign
-    @PostMapping("/admin/add_campaign")
+    @GetMapping("/admin/add_campaign")
     public String add_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
         try {
             Double.parseDouble(userID);
@@ -198,7 +198,7 @@ public class HomeResource {
         }
     }
 
-    @PostMapping("/admin/remove_campaign")
+    @GetMapping("/admin/remove_campaign")
     public String remove_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
         try {
             Double.parseDouble(userID);
@@ -258,7 +258,7 @@ public class HomeResource {
         }
     }
 
-    @PostMapping("/admin/complete_campaign")
+    @GetMapping("/admin/complete_campaign")
     public String complete_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
         try {
             Double.parseDouble(userID);
@@ -349,7 +349,7 @@ public class HomeResource {
         }
     }
 
-    @PostMapping("/business/new_campaign")
+    @GetMapping("/business/new_campaign")
     public String new_campaign(@RequestParam("type") String type) throws SQLException {
         if (!type.matches("[a-zA-Z]+")){
             return ("<h1>Illegal arguments</h1>");
