@@ -21,9 +21,10 @@ As of right now, this build functions by running in the cloud through travis-ci.
 
 When deployed on travis-ci, it will run 
 
-Running the tests will fail in the master branch, meaning that the security issues exist. 
+Running the tests will fail in the security-issues branch, meaning that the security issues exist. 
 
-Running the tests in the release branch will not fail, meaning that the security issues have been fixed.
+Running the tests in the master branch will not fail, meaning that the security issues have been fixed.
+
 
 ## License
 All rights reserved to Camren Hall. The only people authorized to access this project are those invited to collaborate with explicitly on Github.
