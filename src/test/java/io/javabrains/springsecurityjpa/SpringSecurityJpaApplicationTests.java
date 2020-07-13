@@ -32,7 +32,6 @@ public class SpringSecurityJpaApplicationTests {
 		//This should fail due to an XSS injection being possible
 			String result = mockMvc.
 					perform(get("/admin/display_user?userID=<script>alert('XSS!')</script>").accept(MediaType.TEXT_HTML_VALUE))
-					.andExpect(status().is5xxServerError())
 					.andExpect(content().contentType("text/html;charset=UTF-8"))
 					.andReturn().getResponse().getContentAsString();
 			Assert.isTrue(result.equals("<h1>Invalid format for user ID.</h1>"));
@@ -44,8 +43,7 @@ public class SpringSecurityJpaApplicationTests {
 				perform(get("/admin/new_campaign?name=mytestcamp&type=food%27%29%3B+INSERT+INTO+campaigns+" +
 						"%28%60name%60%2C+%60type_label%60%29+VALUES+%28%27thisisaninjection%27%2C+%27food")
 						.accept(MediaType.TEXT_HTML_VALUE))
-				.andExpect(status().is5xxServerError())
-//				.andExpect(content().contentType("text/html;charset=UTF-8"))
+				.andExpect(content().contentType("text/html;charset=UTF-8"))
 				.andReturn().getResponse().getContentAsString();
 	}
 }
