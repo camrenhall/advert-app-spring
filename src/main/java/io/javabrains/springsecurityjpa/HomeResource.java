@@ -131,11 +131,11 @@ public class HomeResource {
 
     @GetMapping("/admin/display_user")
     public String display_user(@RequestParam("userID") String userID) throws IOException {
-        try {
-            Double.parseDouble(userID);
-        } catch(NumberFormatException e){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        try {
+//            Double.parseDouble(userID);
+//        } catch(NumberFormatException e){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
         return ("<h1>Showing info about user with ID: " + userID + "</h1>");
     }
 
@@ -155,12 +155,12 @@ public class HomeResource {
     //Assigns a campaign to a user - this is not for creating a whole new ad campaign
     @GetMapping("/admin/add_campaign")
     public String add_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
-        try {
-            Double.parseDouble(userID);
-            Double.parseDouble(projectID);
-        } catch(NumberFormatException e){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        try {
+//            Double.parseDouble(userID);
+//            Double.parseDouble(projectID);
+//        } catch(NumberFormatException e){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -200,12 +200,12 @@ public class HomeResource {
 
     @GetMapping("/admin/remove_campaign")
     public String remove_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
-        try {
-            Double.parseDouble(userID);
-            Double.parseDouble(projectID);
-        } catch(NumberFormatException e){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        try {
+//            Double.parseDouble(userID);
+//            Double.parseDouble(projectID);
+//        } catch(NumberFormatException e){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -260,12 +260,12 @@ public class HomeResource {
 
     @GetMapping("/admin/complete_campaign")
     public String complete_campaign(@RequestParam("userID") String userID, @RequestParam("projectID") String projectID) throws SQLException {
-        try {
-            Double.parseDouble(userID);
-            Double.parseDouble(projectID);
-        } catch(NumberFormatException e){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        try {
+//            Double.parseDouble(userID);
+//            Double.parseDouble(projectID);
+//        } catch(NumberFormatException e){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
         Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
         Statement stmt = con.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -332,9 +332,9 @@ public class HomeResource {
     //TODO change this to POST Method
     @GetMapping("/admin/new_campaign")
     public String new_campaign(@RequestParam("name") String name, @RequestParam("type") String type) throws SQLException {
-        if (!name.matches("[a-zA-Z]+") || !type.matches("[a-zA-Z]+")){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        if (!name.matches("[a-zA-Z]+") || !type.matches("[a-zA-Z]+")){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
         String campaignToAdd = "";
         try{
             Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
@@ -351,9 +351,9 @@ public class HomeResource {
 
     @GetMapping("/business/new_campaign")
     public String new_campaign(@RequestParam("type") String type) throws SQLException {
-        if (!type.matches("[a-zA-Z]+")){
-            return ("<h1>Illegal arguments</h1>");
-        }
+//        if (!type.matches("[a-zA-Z]+")){
+//            return ("<h1>Illegal arguments</h1>");
+//        }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
