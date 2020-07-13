@@ -152,8 +152,11 @@ public class HomeResource {
     // http://localhost:8080/admin/display_user?userID=%3Cscript%3Ealert(%27XSS%20Success!%27)%3C/script%3E
     @GetMapping("/admin/display_user")
     public String display_user(@RequestParam("userID") String userID) throws IOException {
-        Double.parseDouble(userID); //This should throw an exception if the userID is not plainly numbers,
-        // which will protect against an injection
+        try {
+            Double.parseDouble(userID);
+        } catch(NumberFormatException e){
+            return ("<h1>Invalid format for user ID.</h1>");
+        }
         return ("<h1>Showing info about user with ID: " + userID + "</h1>");
     }
 

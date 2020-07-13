@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.Assert;
 
 import java.sql.SQLException;
 
@@ -32,8 +33,9 @@ public class SpringSecurityJpaApplicationTests {
 			String result = mockMvc.
 					perform(get("/admin/display_user?userID=<script>alert('XSS!')</script>").accept(MediaType.TEXT_HTML_VALUE))
 					.andExpect(status().is5xxServerError())
-//					.andExpect(content().contentType("text/html;charset=UTF-8"))
+					.andExpect(content().contentType("text/html;charset=UTF-8"))
 					.andReturn().getResponse().getContentAsString();
+			Assert.isTrue(result.equals("<h1>Invalid format for user ID.</h1>"));
 	}
 
 	@Test
