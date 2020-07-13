@@ -29,7 +29,6 @@ public class SpringSecurityJpaApplicationTests {
 
 	@Test
 	public void testXSS() throws Exception {
-		//This should fail due to an XSS injection being possible
 			String result = mockMvc.
 					perform(get("/admin/display_user?userID=<script>alert('XSS!')</script>").accept(MediaType.TEXT_HTML_VALUE))
 					.andExpect(content().contentType("text/html;charset=UTF-8"))
@@ -45,6 +44,7 @@ public class SpringSecurityJpaApplicationTests {
 						.accept(MediaType.TEXT_HTML_VALUE))
 				.andExpect(content().contentType("text/html;charset=UTF-8"))
 				.andReturn().getResponse().getContentAsString();
+		Assert.isTrue(result.equals("<h1>Illegal arguments to Name and Type</h1>"));
 	}
 }
 

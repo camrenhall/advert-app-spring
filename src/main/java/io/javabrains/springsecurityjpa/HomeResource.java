@@ -338,6 +338,9 @@ public class HomeResource {
     //TODO change this to POST Method
     @GetMapping("/admin/new_campaign")
     public String new_campaign(@RequestParam("name") String name, @RequestParam("type") String type) throws SQLException {
+        if (!name.matches("[a-zA-Z]+") || !type.matches("[a-zA-Z]+")){
+            return ("<h1>Illegal arguments to Name and Type</h1>");
+        }
         String campaignToAdd = "";
         try{
             Connection con = DriverManager.getConnection(SQL_SERVER_URL, SQL_USER_LOGIN, SQL_PASS_LOGIN);
